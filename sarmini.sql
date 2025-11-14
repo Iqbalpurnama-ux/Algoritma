@@ -1,134 +1,103 @@
-CREATE DATABASE db_penjualan_alat_elektronik
-CREATE TABLE pelanggan
+INSERT INTO anggota VALUES
+(1, 'iqbal', 'kalisumur', 8347641684),
+(2, 'napi', 'bandung', 887965254),
+(3, 'asep', 'purwokerto', 885485245),
+(4, 'danu', 'bumiayu', 8964452154),
+(5, 'elsa', 'kaliwades', 896526422),
+(6, 'nur', 'laren', 8746220316),
+(7, 'zaki', 'pamijen', 88524120651),
+(8, 'nila', 'sokaraja', 84629641684),
+(9, 'jeno', 'korea', 87854262145),
+(10, 'maek', 'kanada', 8258524526);
+
+INSERT INTO buku VALUES
+(1, 'novel', 1, 1, 2005, 'Fiksi Ilmiah', 50 ),
+(2, 'cerpen', 2, 2, 2007, 'Fantasi', 49 ),
+(3, 'sikancil', 3, 3, 2015, 'Misteri', 54 ),
+(4, 'badak', 4, 4, 2013, 'Romance', 90 ),
+(5, 'harimau', 5, 5, 2000, 'Horor', 88),
+(6, '5 langkah menuju kesuksesan', 6, 6, 2016, 'Biografi', 20 ),
+(7, 'panduan sholat', 7, 7, 2005, 'Sejarah', 21 ),
+(8, 'jurnal it', 8, 8, 2019, 'Pengembangan Diri', 22 ),
+(9, 'amikom the series', 9, 9, 2001, 'histori', 15 ),
+(10, 'sidu', 10, 10, 2006, 'Buku Anak-Anak', 17 );
+ select * from buku
+
+INSERT INTO penulis VALUES
+(1, 'japar', 'amerika'),
+(2, 'napu', 'eropa'),
+(3, 'asup', 'inggris'),
+(4, 'fajar', 'indonesia'),
+(5, 'elsx', 'belanda'),
+(6, 'sipa', 'jepang'),
+(7, 'siti', 'china'),
+(8, 'lisa', 'kamboja'),
+(9, 'karina', 'piliphin'),
+(10, 'kaldea', 'kanada');
+
+INSERT INTO penerbit VALUES
+(1, 'alfa', 'purbulinggo', 8347641684),
+(2, 'nashati', 'bandung dage', 887965254),
+(3, 'mark', 'purwokerto utara', 885485245),
+(4, 'palen', 'bumiayu city', 8964452154),
+(5, 'anin', 'kaliwadas utara', 896526422),
+(6, 'dita', 'laren tengah', 8746220316),
+(7, 'arga', 'pamijen sajen', 88524120651),
+(8, 'nadif', 'sokaraja wetan', 84629641684),
+(9, 'jehyun', 'korea utara', 87854262145),
+(10, 'jungkok', 'kanada selatan', 8258524526);
+
+insert into peminjaman values
+(1, 1, 1, 15, 10, 'Dikembalikan', 24000),
+(2, 2, 2, 05, 9, 'Dipinjam', 20000),
+(3, 3, 3,18, 12, 'Dikembalikan', 10000),
+(4, 4, 4,17, 18, 'Dikembalikan', 5000),
+(5, 5, 5, 15, 11, 'Dipinjam', 13000),
+(6, 6, 6,11, 10, 'Dikembalikan', 15000),
+(7, 7, 7, 02, 18, 'Dipinjam', 20000),
+(8, 8, 8, 15, 13, 'Dipinjam', 15000),
+(9, 9, 9, 08, 25, 'Dikembalikan', 12000),
+(10, 10, 10, 09, 26, 'Dipinjam', 29000);
+
+INSERT INTO pengembalian VALUES
+(1, 1, 15, 25.000),
+(2, 2, 05, 4.000),
+(3, 3, 18, 5.000),
+(4, 4, 17, 18.000),
+(5, 5, 15, 11.000),
+(6, 6, 11, 10.000),
+(7, 7, 02, 11.000),
+(8, 8, 15, 13.000),
+(9, 9, 08, 25.000),
+(10, 10, 09, 20.000);
+
+-- AGGRATE
+-- COUNT
+
+SELECT COUNT(*) AS Jumlah_Peminjaman
+FROM peminjaman;
+
+-- SUM
+SELECT SUM(harga) AS Total_Harga
+FROM barang;
+
+-- AVG
+SELECT AVG(denda) AS RataRata_denda
+FROM peminjaman;
+
+SELECT STATUS FROM peminjaman
+SELECT MIN(denda) AS denda_terkecil
+FROM peminjaman;
+
+SELECT STATUS FROM peminjaman
+SELECT MAX(denda) AS denda_terbesar
+FROM peminjaman;
+
+INSERT INTO cotoh VALUES (1, 2025-11-01);
+ 
+create table cotoh
 (
-	id_pelanggan INT (50),
-	nama_pelanggan VARCHAR (50),
-	alamat VARCHAR (50),
-	no_tlp VARCHAR (15),
-	PRIMARY KEY (id_pelanggan)
+	id_contoh int (50),
+	tanggal date
 );
-
-CREATE TABLE produk
-(
-	id_produk INT (50),
-	nama_produk VARCHAR (50),
-	kategori VARCHAR (50),
-	harga INT (50) ,
-	stok INT (100),
-	PRIMARY KEY (id_produk)
-);
-
-CREATE TABLE pegawai
-(
-	id_pegawai INT (50),
-	nama_pegawai VARCHAR (50),
-	jabatan VARCHAR (50),
-	PRIMARY KEY (id_pegawai)
-);
-DROP TABLE produk
-CREATE TABLE transaksi
-(
-	id_transaksi INT (50),
-	tanggal DATETIME,
-	id_pelanggan INT (50),
-	id_pegawai INT (50),
-	PRIMARY KEY (id_transaksi),
-	FOREIGN KEY (id_pelanggan) REFERENCES pelanggan(id_pelanggan),
-	FOREIGN KEY (id_pegawai) REFERENCES pegawai(id_pegawai)
-);
-
-CREATE TABLE detail_transaksi
-(
-	id_detail INT (50),
-	id_pelanggan INT (50),
-	id_produk INT (50),
-	jumlah INT (50),
-	PRIMARY KEY (id_detail),
-	FOREIGN KEY (id_pelanggan) REFERENCES pelanggan(id_pelanggan),
-	FOREIGN KEY (id_produk) REFERENCES produk(id_produk)
-);
-
-ALTER TABLE 
-INSERT INTO pegawai VALUES
-(1, 'iqbal', 'CEO'),
-(2, 'Nila', 'CTO'),
-(3, 'nashati', 'Maneger'),
-(4, 'japar', 'Kasir'),
-(5, 'siti', 'Kasir'),
-(6, 'jeno', 'Kasir'),
-(7, 'Sifa', 'Kasir'),
-(8, 'jehyun', 'Claning Servis'),
-(9, 'nisa', 'Satpam'),
-(10, 'alpa', 'Satpam');
-
-INSERT INTO pelanggan VALUES
-(1, 'asep', 'kalisumur', '088574151515'),
-(2, 'firli', 'kalwadas', '08579262946'),
-(3, 'pipi', 'mijen', '0885154815'),
-(4, 'napi', 'purwokerto', '08841254154'),
-(5, 'rohman', 'laren', '08845115484'),
-(6, 'ahmad', 'semampir', '0885412541'),
-(7, 'danu', 'sumampir utara', '08852154110'),
-(8, 'pahar', 'baturaden', '085251852'),
-(9, 'jupleng', 'sokaraja', '0852585513'),
-(10, 'danang', 'sokaraja utara', '085285251513');
-
-INSERT INTO produk VALUES
-(1, 'Asus Tuf Gaming', 'Laptop', 13000000, 153),
-(2, 'Asus Tuf Gaming A15', 'Laptop', 11000000, 100),
-(3, 'Asus Tuf Gaming 15', 'Laptop', 10000000, 95),
-(4, 'Temper Glass', 'Aksesoris', 100000, 102),
-(5, 'Casing', 'Aksesoris', 20000, 52),
-(6, 'Asus Tuf Gaming', 'Laptop', 13000000, 158),
-(7, 'Asus Vivobook', 'Laptop', 11500000, 85),
-(8, 'Iphon 17 pro max', 'Handphone', 13000000, 200),
-(9, 'Samsung', 'Handphone', 5000000, 152),
-(10, 'Asus Rog', 'Laptop', 22000000, 150);
-
-INSERT INTO transaksi VALUES
-(1, NOW(), 1, 1),
-(2, NOW(), 2, 2),
-(3, NOW(), 3, 3),
-(4, NOW(), 4, 4),
-(5, NOW(), 5, 5),
-(6, NOW(), 6, 6),
-(7, NOW(), 7, 7),
-(8, NOW(), 8, 8),
-(9, NOW(), 9, 9),
-(10, NOW(), 10, 10);
-
-INSERT INTO detail_transaksi VALUES
-(1, 1, 1, 90),
-(2, 2, 2, 65),
-(3, 3, 3, 95),
-(4, 4, 4, 99),
-(5, 5, 5, 68),
-(6, 6, 6, 80),
-(7, 7, 7, 75),
-(8, 8, 8, 80),
-(9, 9, 9, 70),
-(10, 10, 10, 100);
-
-SELECT COUNT(*) AS harga
-FROM produk;
-SELECT AVG(harga) AS rata_rata_harga
-FROM produk;
-
-SELECT MIN(harga) AS harga_terendah
-FROM produk;
-
-SELECT MAX(harga) AS harga_tertinggi
-FROM produk;
-'a%' = menampilkan DATA cust yang diawali huruf a
-'%a' = menampilkan DATA cust yang dibelakang huruf a
-'%i%' = menampilkan semua DATA yang ada huruf i nya
-'__a%' = menampilkan DATA dengan  huruf ke 3 dengan abjad a
-'_a%' = menampilkan DATA dengan  huruf ke 2 dengan abjad a
-
-
-SELECT * FROM pelanggan AS nama WHERE nama_pelanggan LIKE 'a%'
-SELECT * FROM pelanggan AS nama WHERE nama_pelanggan LIKE '%a'
-SELECT * FROM pelanggan AS nama WHERE nama_pelanggan LIKE '%i%'
-SELECT * FROM pelanggan AS nama WHERE nama_pelanggan LIKE '__h%'
-SELECT * FROM pelanggan WHERE nama_pelanggan LIKE 'a%'
-
+alter table cotoh add primary key (id_contoh);
